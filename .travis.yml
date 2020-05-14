@@ -1,0 +1,59 @@
+language: generic
+
+env:
+  global:
+    - DEV_URL=https://platform-dev.tradelens.com
+    - TEST_URL=https://platform-test.tradelens.com
+    - SANDBOX_URL=https://platform-sandbox.tradelens.com
+    - PROD_URL=https://platform.tradelens.com
+    - DEMO_URL=https://platform-demo.tradelens.com
+
+notifications:
+  email:
+    recipients:
+      - emanaty@eg.ibm.com
+ #     - nis.jespersen@maerskgtd.com
+ #     - aya.ragaei@ibm.com
+ #     - nthabet@eg.ibm.com
+    on_success: always
+    on_failure: always
+
+script:
+  - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
+  - echo "TRAVIS_PULL_REQUEST_BRANCH = $TRAVIS_PULL_REQUEST_BRANCH"
+  - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
+  - echo "TRAVIS_JOB_NAME = $TRAVIS_JOB_NAME"
+  - echo "TRAVIS_JOB_ID = $TRAVIS_JOB_ID"
+  - echo "TRAVIS_COMMIT_MESSAGE = $TRAVIS_COMMIT_MESSAGE"
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+       CHANGED_FILES=`git diff --name-only $TRAVIS_COMMIT_RANGE | grep ".json"`;
+       echo "Changed files = $CHANGED_FILES";
+       if  [[ -z $CHANGED_FILES ]] ; then
+          echo "Not running CI since no json file was changed." ;
+       elif [[ "$TRAVIS_BRANCH" == "develop" ]] || [[ "$TRAVIS_BRANCH" == "test" ]] || [[ "$TRAVIS_BRANCH" == "sandbox" ]] || [[ "$TRAVIS_BRANCH" == "prod" ]] || [[ "$TRAVIS_BRANCH" == "demo" ]]; then 
+         while IFS= read -r file; do
+             echo "... $file ...";
+             DOCUMENTS_NAMES=`cut -d "," -f 1 document_schema_data.csv`;
+             DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
+             len=${#DOCUMENTS_NAMES_ARRAY[@]}
+             exist=0;
+             for ((i = 0; i < $len; i++)); do
+                full_path=${DOCUMENTS_NAMES_ARRAY[$i]}
+                if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == $file ]] ; then
+                   exist=1;
+                fi;
+             done
+             if (( $exist == 1 )); then       
+                 ./scripts/deploy-develop.sh $file;
+                  TL_VERSION=$? ;
+                 echo "Out TL_VERSION = $TL_VERSION";
+                 if (( $TL_VERSION > 0)) ; then
+                   ./scripts/update_versions.sh $file $TL_VERSION;
+                 fi;
+
+             elif (( $exist == 0 )); then
+                 ./scripts/deploy-new-document.sh $file;
+             fi;
+         done <<< "$CHANGED_FILES"; 
+       fi;
+    fi;
