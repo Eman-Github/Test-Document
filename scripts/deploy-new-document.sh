@@ -131,5 +131,5 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
       else
          echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
          exit;
-      fi;
-      
+      fi;   
+fi;
