@@ -35,7 +35,7 @@ script:
                 fi;
              done;
              if (( $exist == 1 )); then       
-#                 ./scripts/deploy-develop.sh $file;
+                 ./scripts/deploy-develop.sh $file;
                   TL_VERSION=$? ;
                  echo "Out TL_VERSION = $TL_VERSION";
                  if (( $TL_VERSION > 0)) ; then
