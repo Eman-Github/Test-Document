@@ -1,13 +1,5 @@
 language: generic
 
-env:
-  global:
-    - DEV_URL=https://platform-dev.tradelens.com
-    - TEST_URL=https://platform-test.tradelens.com
-    - SANDBOX_URL=https://platform-sandbox.tradelens.com
-    - PROD_URL=https://platform.tradelens.com
-    - DEMO_URL=https://platform-demo.tradelens.com
-
 notifications:
   email:
     recipients:
