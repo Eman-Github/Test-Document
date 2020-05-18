@@ -36,6 +36,7 @@ script:
              echo "$CHANGED_DOC_NAME,$TRAVIS_BRANCH";
              for ((i = 0; i < $len; i++)); do
                  echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
+                 echo "Line number = $i ";
                 if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
                    exist=1;
                 fi;
@@ -49,7 +50,7 @@ script:
                  fi;
 
              elif (( $exist == 0 )); then
-                 ./scripts/deploy-new-document.sh $file;
+                 ./scripts/deploy-new-document.sh $file $CHANGED_DOC_NAME;
              fi;
          done <<< "$CHANGED_FILES"; 
        fi;

@@ -3,7 +3,12 @@ set -ev
 
 if [ -z $1 ]; then
     echo "CHANGED_FILE can't be null ";
-    exit;
+    exit 1;
+fi;
+
+if [ -z $2 ]; then
+    echo "CHANGED_FILE Name can't be null ";
+    exit 1;
 fi;
 
 if [ "$TRAVIS_BRANCH" == "develop" ]; then
@@ -76,9 +81,7 @@ fi;
 HEADER_CONTENT_TYPE="Content-Type:application/json"
 HEADER_ACCEPT="Accept:application/json"
 HEADER_AUTHORIZATION="Authorization: Bearer $BEARER_TOKEN"
-API_URL="$HOST_URL/api/v1/documentSchema/${data[3]}"
 POST_API_URL="$HOST_URL/api/v1/documentSchema"
-echo "API_URL = $API_URL"
 echo "POST_API_URL = $POST_API_URL"
 
 #------------------- Deploy to Development env. --------------
@@ -86,10 +89,10 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
    
    JSON_FILE=`cat "${1}"`
    echo "$JSON_FILE"
-#   POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
-#      --header "${HEADER_CONTENT_TYPE}" \
-#      --header "${HEADER_AUTHORIZATION}" \
-#      --data-raw "${JSON_FILE}"`
+   POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
+      --header "${HEADER_CONTENT_TYPE}" \
+      --header "${HEADER_AUTHORIZATION}" \
+      --data-raw "${JSON_FILE}"`
       
       echo "POST_RESPONSE = $POST_RESPONSE";
       if echo "$POST_RESPONSE" | grep -q "id"; then
@@ -110,8 +113,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
     
          CURRENT_DATE=`date +'%Y-%m-%d %T'`
          echo "CURRENT_DATE = $CURRENT_DATE"
-         DOC_NAME = ${file%.json}
-         NEWLINE="${DOC_NAME},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
+         NEWLINE="${2},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
          echo "$NEWLINE"  >> ./document_schema_data.csv
           head -n 1 ./document_schema_data.csv > ./temp.csv &&
           tail -n +2 ./document_schema_data.csv | sort -t "," -k 1 >> ./temp.csv
@@ -127,7 +129,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
 
       else
-         echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
+         echo "API for post the documentSchema $API_URL name = ${2} has failed to deploy ";
          exit 1;
       fi;   
 #------------------- Get Current TL Version on Test env. --------------
@@ -164,8 +166,8 @@ elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_B
 
          CURRENT_DATE=`date +'%Y-%m-%d %T'`
          echo "CURRENT_DATE = $CURRENT_DATE"
-         DOC_NAME = ${file%.json}
-         NEWLINE="${DOC_NAME},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
+       #  DOC_NAME = ${file%.json}
+         NEWLINE="${2},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
          echo "$NEWLINE"  >> ./document_schema_data.csv
          head -n 1 ./document_schema_data.csv > ./temp.csv &&
           tail -n +2 ./document_schema_data.csv | sort -t "," -k 1 >> ./temp.csv
@@ -181,7 +183,7 @@ elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_B
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"develop"
       else
-         echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
+         echo "API for post the documentSchema $API_URL name = ${2} has failed to deploy ";
          exit 1;
       fi;     
    fi;
