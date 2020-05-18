@@ -31,6 +31,7 @@ script:
              len=${#DOCUMENTS_NAMES_ARRAY[@]};
              exist=0;
              for ((i = 0; i < $len; i++)); do
+                 echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
                 if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == $file ]] ; then
                    exist=1;
                 fi;
