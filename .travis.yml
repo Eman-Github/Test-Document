@@ -35,6 +35,7 @@ script:
              exist=0;
              for ((i = 0; i < $len; i++)); do
                  echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
+                 echo "$CHANGED_DOC_NAME,$TRAVIS_BRANCH"
                 if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
                    exist=1;
                 fi;
