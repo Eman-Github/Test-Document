@@ -39,6 +39,7 @@ script:
                  echo "Line number = $i ";
                 if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
                    exist=1;
+                   echo "Document exist in line number  = $i ";
                 fi;
              done;
              if (( $exist == 1 )); then       
@@ -50,6 +51,7 @@ script:
                  fi;
 
              elif (( $exist == 0 )); then
+                 echo "Document not exist in csv file ";                 
                  ./scripts/deploy-new-document.sh $file $CHANGED_DOC_NAME;
              fi;
          done <<< "$CHANGED_FILES"; 
