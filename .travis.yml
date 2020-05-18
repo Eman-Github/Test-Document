@@ -26,9 +26,9 @@ script:
          while IFS= read -r file; do
              echo "... $file ...";
              echo "... $TRAVIS_BRANCH ...";     
-             temp=${file#*/}
-             CHANGED_DOC_NAME=${temp%.*}
-             echo "Document Name $CHANGED_DOC_NAME"
+             temp=${file#*/};
+             CHANGED_DOC_NAME=${temp%.*};
+             echo "Document Name $CHANGED_DOC_NAME";
              DOCUMENTS_NAMES=`cut -d "," -f 1,2 document_schema_data.csv`;
              DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
              len=${#DOCUMENTS_NAMES_ARRAY[@]};
