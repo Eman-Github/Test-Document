@@ -26,18 +26,21 @@ script:
          while IFS= read -r file; do
              echo "... $file ...";
              echo "... $TRAVIS_BRANCH ...";     
+             temp=${file#*/}
+             CHANGED_DOC_NAME=${temp%.*}
+             echo "Document Name $CHANGED_DOC_NAME"
              DOCUMENTS_NAMES=`cut -d "," -f 1,2 document_schema_data.csv`;
              DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
              len=${#DOCUMENTS_NAMES_ARRAY[@]};
              exist=0;
              for ((i = 0; i < $len; i++)); do
                  echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
-                if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == $file ]] ; then
+                if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
                    exist=1;
                 fi;
              done;
              if (( $exist == 1 )); then       
-                 ./scripts/deploy-develop.sh $file;
+               #  ./scripts/deploy-develop.sh $file;
                   TL_VERSION=$? ;
                  echo "Out TL_VERSION = $TL_VERSION";
                  if (( $TL_VERSION > 0)) ; then

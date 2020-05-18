@@ -1,5 +1,6 @@
 {
-    "name": "ARRIVAL_NOTICE",
+ 
+   "name": "ARRIVAL_NOTICE",
     "docType": "CONTAINER_ARRIVAL_NOTICE",
     "description": "Arrival Notice",
     "supportedContentTypes": [

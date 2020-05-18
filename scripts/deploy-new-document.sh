@@ -86,7 +86,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
    
    JSON_FILE=`cat "${1}"`
    echo "$JSON_FILE"
-#   POST_RESPONSE=`curl --location --request POST "$API_URL" \
+#   POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
 #      --header "${HEADER_CONTENT_TYPE}" \
 #      --header "${HEADER_AUTHORIZATION}" \
 #      --data-raw "${JSON_FILE}"`
@@ -94,24 +94,24 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
       echo "POST_RESPONSE = $POST_RESPONSE";
       if echo "$POST_RESPONSE" | grep -q "id"; then
          echo "POST Schema API run successfully";
-         declare -i DOC_ID_DEV=`echo $POST_RESPONSE | grep -oP '(?<="id":)[^,]*'`
+         declare -i DOC_ID=`echo $POST_RESPONSE | grep -oP '(?<="id":)[^,]*'`
          echo "DOC_ID_DEV = $DOC_ID_DEV"
          for i in {1..10}
          do
             sleep 5s
          done 
 
-         GET_RESPONSE=`curl --location --request GET "$API_URL" \
+         GET_RESPONSE=`curl --location --request GET "$API_URL/$DOC_ID_DEV" \
          --header "${HEADER_AUTHORIZATION}"`
          echo "GET_RESPONSE = $GET_RESPONSE"
 
          declare -i TL_VERSION_DEV=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
          echo " TL_VERSION_DEV = $TL_VERSION_DEV"
-         
+    
          CURRENT_DATE=`date +'%Y-%m-%d %T'`
          echo "CURRENT_DATE = $CURRENT_DATE"
          DOC_NAME = ${file%.json}
-         NEWLINE="${DOC_NAME},develop,${CURRENT_DATE},$TL_SCHEMA_ID,$TL_VERSION_DEV,1,0,0";
+         NEWLINE="${DOC_NAME},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
          echo "$NEWLINE"  >> ./document_schema_data.csv
           head -n 1 ./document_schema_data.csv > ./temp.csv &&
           tail -n +2 ./document_schema_data.csv | sort -t "," -k 1 >> ./temp.csv
@@ -125,11 +125,66 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
           git show-ref
           git branch
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
- 
 
-       
       else
          echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
          exit;
       fi;   
+#------------------- Get Current TL Version on Test env. --------------
+elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_BRANCH" == "demo" || "$TRAVIS_BRANCH" == "prod"]; then
+
+   DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
+   echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
+   if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
+ 
+       JSON_FILE=`cat "${1}"`
+       echo "$JSON_FILE"
+
+       #   POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
+       #      --header "${HEADER_CONTENT_TYPE}" \
+       #      --header "${HEADER_AUTHORIZATION}" \
+       #      --data-raw "${JSON_FILE}"`
+
+      echo "POST_RESPONSE = $POST_RESPONSE";
+      if echo "$POST_RESPONSE" | grep -q "id"; then
+         echo "POST Schema API run successfully";
+         declare -i DOC_ID=`echo $POST_RESPONSE | grep -oP '(?<="id":)[^,]*'`
+         echo "DOC_ID_DEV = $DOC_ID_DEV"
+         for i in {1..10}
+         do
+            sleep 5s
+         done
+         
+          GET_RESPONSE=`curl --location --request GET "$API_URL/$DOC_ID_DEV" \
+         --header "${HEADER_AUTHORIZATION}"`
+         echo "GET_RESPONSE = $GET_RESPONSE"
+
+         declare -i TL_VERSION_DEV=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
+         echo " TL_VERSION_DEV = $TL_VERSION_DEV"
+
+         CURRENT_DATE=`date +'%Y-%m-%d %T'`
+         echo "CURRENT_DATE = $CURRENT_DATE"
+         DOC_NAME = ${file%.json}
+         NEWLINE="${DOC_NAME},${TRAVIS_BRANCH},${CURRENT_DATE},$DOC_ID,$TL_VERSION_DEV,1,0,0";
+         echo "$NEWLINE"  >> ./document_schema_data.csv
+         head -n 1 ./document_schema_data.csv > ./temp.csv &&
+          tail -n +2 ./document_schema_data.csv | sort -t "," -k 1 >> ./temp.csv
+          cp ./temp.csv ./document_schema_data.csv
+          rm ./temp.csv
+          cat ./document_schema_data.csv
+
+          git status
+          git add ./document_schema_data.csv
+          git commit -m "Auto update versions"
+          git show-ref
+          git branch
+          git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
+          git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"develop"
+      else
+         echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
+         exit;
+      fi;     
+   fi;
 fi;
+
+#-----------------------------------------------------------------------------------
