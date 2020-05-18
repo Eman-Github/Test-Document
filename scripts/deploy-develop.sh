@@ -118,7 +118,7 @@ echo "POST_API_URL = $POST_API_URL"
 if [ "$TRAVIS_BRANCH" == "develop" ]; then
    
    JSON_FILE=`cat "${1}"`
-   echo "$JSON_FILE"
+#   echo "$JSON_FILE"
   
 #      UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
 #      --header "${HEADER_CONTENT_TYPE}" \
