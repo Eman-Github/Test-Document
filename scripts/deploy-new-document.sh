@@ -128,7 +128,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
 
       else
          echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
-         exit;
+         exit 1;
       fi;   
 #------------------- Get Current TL Version on Test env. --------------
 elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_BRANCH" == "demo" || "$TRAVIS_BRANCH" == "prod"]; then
@@ -182,7 +182,7 @@ elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_B
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"develop"
       else
          echo "API for post the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
-         exit;
+         exit 1;
       fi;     
    fi;
 fi;
