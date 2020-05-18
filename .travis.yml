@@ -25,7 +25,8 @@ script:
        elif [[ "$TRAVIS_BRANCH" == "develop" ]] || [[ "$TRAVIS_BRANCH" == "test" ]] || [[ "$TRAVIS_BRANCH" == "sandbox" ]] || [[ "$TRAVIS_BRANCH" == "prod" ]] || [[ "$TRAVIS_BRANCH" == "demo" ]]; then 
          while IFS= read -r file; do
              echo "... $file ...";
-             DOCUMENTS_NAMES=`cut -d "," -f 1 document_schema_data.csv`;
+             echo "... $TRAVIS_BRANCH ...";     
+             DOCUMENTS_NAMES=`cut -d "," -f 2 document_schema_data.csv`;
              DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
              len=${#DOCUMENTS_NAMES_ARRAY[@]};
              exist=0;
