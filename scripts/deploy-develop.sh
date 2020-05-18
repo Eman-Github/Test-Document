@@ -88,9 +88,10 @@ echo "$CHANGED_DOC_NAME,$TRAVIS_BRANCH";
 for ((i = 0; i < $len; i++)); do
      echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
      if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
-       LINE_NUM=($i + 1)
+      
+       ((LINE_NUM=$i+1));
        echo "LINE_NUM = $LINE_NUM" 
-       LINE=`sed -n '$LINE_NUM p' ./document_schema_data.csv`
+       LINE=`sed -n "$LINE_NUM p" ./document_schema_data.csv`;
        echo "LINE = $LINE" 
      fi;
 done;
