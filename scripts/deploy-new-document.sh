@@ -104,7 +104,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
       --data-raw "${JSON_FILE}"`
       
       echo "POST_RESPONSE = $POST_RESPONSE";
-      if echo "$POST_RESPONSE" | grep -q "id"; then
+#remove      if echo "$POST_RESPONSE" | grep -q "id"; then
          echo "POST Schema API run successfully";
          declare -i DOC_ID=`echo $POST_RESPONSE | grep -oP '(?<="id":)[^,]*'`
          echo "DOC_ID_DEV = $DOC_ID_DEV"
@@ -137,10 +137,10 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
           git branch
           git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
 
-      else
-         echo "API for post the documentSchema $API_URL name = ${2} has failed to deploy ";
-         exit 1;
-      fi;   
+#remove      else
+#remove         echo "API for post the documentSchema $API_URL name = ${2} has failed to deploy ";
+#remove         exit 1;
+#remove      fi;   
 #------------------- Get Current TL Version on Test env. --------------
 elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_BRANCH" == "demo" || "$TRAVIS_BRANCH" == "prod"]; then
 
