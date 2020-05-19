@@ -32,13 +32,33 @@ echo "To Branch: $TO_BRANCH"
 #==============================================================
 
 echo "Get the Document Schema Id from document_schema_data.csv file '$1' ";
+#temp=${1#*/}
+#CHANGED_DOC_NAME=${temp%.*}
+#echo "Document Name $CHANGED_DOC_NAME"
+#echo "${CHANGED_DOC_NAME},${TO_BRANCH}"
+#TO_LINE=`grep "${CHANGED_DOC_NAME},${TO_BRANCH}" ./document_schema_data.csv`
+#echo "TO_LINE = $TO_LINE"
+
+
 temp=${1#*/}
 CHANGED_DOC_NAME=${temp%.*}
 echo "Document Name $CHANGED_DOC_NAME"
 echo "${CHANGED_DOC_NAME},${TO_BRANCH}"
-TO_LINE=`grep "${CHANGED_DOC_NAME},${TO_BRANCH}" ./document_schema_data.csv`
-echo "TO_LINE = $TO_LINE"
 
+DOCUMENTS_NAMES=`cut -d "," -f 1,2 document_schema_data.csv`;
+DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
+len=${#DOCUMENTS_NAMES_ARRAY[@]};
+echo "$CHANGED_DOC_NAME,$TRAVIS_BRANCH";
+for ((i = 0; i < $len; i++)); do
+     echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
+     if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TO_BRANCH" ]] ; then
+
+       ((LINE_NUM=$i+1));
+       echo "LINE_NUM = $LINE_NUM"
+       TO_LINE=`sed -n "$LINE_NUM p" ./document_schema_data.csv`;
+       echo "TO_LINE = $TO_LINE"
+     fi;
+done;
 #------------- Get From Branch Data In case of fixbug ------------
 if [[ "$FROM_BRANCH" == *"fixbug"* ]] ; then
    IFS='_' read -r -a FIXBUG_NAME <<< "$FROM_BRANCH_NAME"
