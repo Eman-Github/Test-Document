@@ -5,6 +5,7 @@ echo "............script started............"
 sleep 1
 pwd
 result=`python ./scripts/get_version.py "hi"`
+echo "result = $result "
 if [ "$result" == "Salaam" ]; then
     echo "script return correct response"
 fi
