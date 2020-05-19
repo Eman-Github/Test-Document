@@ -113,8 +113,8 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
             sleep 5s
          done 
 
-         GET_RESPONSE=`curl --location --request GET "$API_URL/$DOC_ID_DEV" \
-         --header "${HEADER_AUTHORIZATION}"`
+#remove         GET_RESPONSE=`curl --location --request GET "$API_URL/$DOC_ID_DEV" \
+#remove         --header "${HEADER_AUTHORIZATION}"`
          echo "GET_RESPONSE = $GET_RESPONSE"
 
          declare -i TL_VERSION_DEV=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
