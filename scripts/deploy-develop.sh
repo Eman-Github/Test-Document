@@ -41,7 +41,7 @@ BODY="grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=$API_KEY"
 
 echo "parameters = $HEADER_CONTENT_TYPE and $BODY "
 RESPONSE_REFRESH_TOKEN=`curl --location --request POST 'https://iam.ng.bluemix.net/oidc/token' --header ${HEADER_CONTENT_TYPE} --data-raw ${BODY}`
-echo "RESPONSE_REFRESH_TOKEN = $RESPONSE_REFRESH_TOKEN"
+#echo "RESPONSE_REFRESH_TOKEN = $RESPONSE_REFRESH_TOKEN"
 
 if [ -z $RESPONSE_REFRESH_TOKEN ]; then
     echo "RESPONSE_REFRESH_TOKEN failed to be returned using POST API 'https://iam.ng.bluemix.net/oidc/token' ";
@@ -64,7 +64,7 @@ RESPONSE_BEARER=`curl --location --request POST "$URL" \
 #echo "RESPONSE_BEARER = $RESPONSE_BEARER"
 
 BEARER_TOKEN=`echo $RESPONSE_BEARER | grep -oP '(?<="onboarding_token":")[^"]*'`
-echo "BEARER_TOKEN = $BEARER_TOKEN"
+#echo "BEARER_TOKEN = $BEARER_TOKEN"
 
 if [ -z $$RESPONSE_BEARER ]; then
     echo "RESPONSE_BEARER failed to be returned using API $URL ";
@@ -79,14 +79,13 @@ temp=${1#*/}
 CHANGED_DOC_NAME=${temp%.*}
 echo "Document Name $CHANGED_DOC_NAME"
 echo "${CHANGED_DOC_NAME},${TRAVIS_BRANCH}"
-#LINE=`grep "${CHANGED_DOC_NAME},${TRAVIS_BRANCH}" ./document_schema_data.csv`;
-#echo "LINE = $LINE"
+
 DOCUMENTS_NAMES=`cut -d "," -f 1,2 document_schema_data.csv`;
 DOCUMENTS_NAMES_ARRAY=($DOCUMENTS_NAMES);
 len=${#DOCUMENTS_NAMES_ARRAY[@]};
 echo "$CHANGED_DOC_NAME,$TRAVIS_BRANCH";
 for ((i = 0; i < $len; i++)); do
-     echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
+   #  echo "Document name,branch  = ${DOCUMENTS_NAMES_ARRAY[$i]} ";
      if [[ ${DOCUMENTS_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME,$TRAVIS_BRANCH" ]] ; then
       
        ((LINE_NUM=$i+1));
@@ -126,7 +125,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
 #      --header "${HEADER_AUTHORIZATION}" \
 #      --data-raw "${JSON_FILE}"`
       
-      echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
+    #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
       if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
          echo "Update Schema API run successfully";
       else
@@ -143,7 +142,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
 
    GET_RESPONSE=`curl --location --request GET "$API_URL" \
    --header "${HEADER_AUTHORIZATION}"`
-   echo "GET_RESPONSE = $GET_RESPONSE"
+   #echo "GET_RESPONSE = $GET_RESPONSE"
 
    declare -i TL_VERSION_DEV=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
    echo "In TL_VERSION_DEV = $TL_VERSION_DEV"
@@ -163,14 +162,14 @@ elif [ "$TRAVIS_BRANCH" == "test" ]; then
    if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
  
        JSON_FILE=`cat "${1}"`
-       echo "$JSON_FILE"
+    #   echo "$JSON_FILE"
 
        UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
        --header "${HEADER_CONTENT_TYPE}" \
        --header "${HEADER_AUTHORIZATION}" \
        --data-raw "${JSON_FILE}"`
 
-       echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
+     #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
        if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
            echo "Update Schema API run successfully";
        else
@@ -188,7 +187,7 @@ elif [ "$TRAVIS_BRANCH" == "test" ]; then
    
    GET_RESPONSE=`curl --location --request GET "$API_URL" \
    --header "${HEADER_AUTHORIZATION}"`
-   echo "GET_RESPONSE = $GET_RESPONSE"
+   #echo "GET_RESPONSE = $GET_RESPONSE"
 
    declare -i TL_VERSION_TEST=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
    echo "In TL_VERSION_TEST = $TL_VERSION_TEST"
@@ -207,14 +206,14 @@ elif [ "$TRAVIS_BRANCH" == "sandbox" ]; then
    if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
 
        JSON_FILE=`cat "${1}"`
-       echo "$JSON_FILE"
+    #   echo "$JSON_FILE"
 
        UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
        --header "${HEADER_CONTENT_TYPE}" \
        --header "${HEADER_AUTHORIZATION}" \
        --data-raw "${JSON_FILE}"`
 
-       echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
+     #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
        if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
            echo "Update Schema API run successfully";
        else
@@ -232,7 +231,7 @@ elif [ "$TRAVIS_BRANCH" == "sandbox" ]; then
 
    GET_RESPONSE=`curl --location --request GET "$API_URL" \
    --header "${HEADER_AUTHORIZATION}"`
-   echo "GET_RESPONSE = $GET_RESPONSE"
+   #echo "GET_RESPONSE = $GET_RESPONSE"
 
    declare -i TL_VERSION_SANDBOX=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
    echo "In TL_VERSION_SANDBOX = $TL_VERSION_SANDBOX"
@@ -251,14 +250,14 @@ elif [ "$TRAVIS_BRANCH" == "prod" ]; then
    if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
 
        JSON_FILE=`cat "${1}"`
-       echo "$JSON_FILE"
+    #   echo "$JSON_FILE"
 
        UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
        --header "${HEADER_CONTENT_TYPE}" \
        --header "${HEADER_AUTHORIZATION}" \
        --data-raw "${JSON_FILE}"`
 
-       echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
+     #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
        if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
            echo "Update Schema API run successfully";
        else
@@ -277,7 +276,7 @@ elif [ "$TRAVIS_BRANCH" == "prod" ]; then
 
    GET_RESPONSE=`curl --location --request GET "$API_URL" \
    --header "${HEADER_AUTHORIZATION}"`
-   echo "GET_RESPONSE = $GET_RESPONSE"
+   #echo "GET_RESPONSE = $GET_RESPONSE"
 
    declare -i TL_VERSION_PROD=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
    echo "In TL_VERSION_PROD = $TL_VERSION_PROD"
@@ -297,14 +296,14 @@ elif [ "$TRAVIS_BRANCH" == "demo" ]; then
    if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
 
        JSON_FILE=`cat "${1}"`
-       echo "$JSON_FILE"
+    #   echo "$JSON_FILE"
 
        UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
        --header "${HEADER_CONTENT_TYPE}" \
        --header "${HEADER_AUTHORIZATION}" \
        --data-raw "${JSON_FILE}"`
 
-       echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
+     #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
        if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
            echo "Update Schema API run successfully";
        else
@@ -323,7 +322,7 @@ elif [ "$TRAVIS_BRANCH" == "demo" ]; then
 
    GET_RESPONSE=`curl --location --request GET "$API_URL" \
    --header "${HEADER_AUTHORIZATION}"`
-   echo "GET_RESPONSE = $GET_RESPONSE"
+  # echo "GET_RESPONSE = $GET_RESPONSE"
 
    declare -i TL_VERSION_DEMO=`echo $GET_RESPONSE | grep -oP '(?<="version":)[^,]*'`
    echo "In TL_VERSION_DEMO = $TL_VERSION_DEMO"
