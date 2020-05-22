@@ -49,7 +49,10 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout"
+        layout: "StandaloneLayout",
+        "onComplete": function(){
+                $("#model-BillOfLading").removeClass("model-container").addClass("swagger-ui opblock opblock-post");
+        }  
       })
       // End Swagger UI call region
 
