@@ -39,7 +39,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "BillOfLading.yml",
+        url: "docs-schema/BillOfLading.yml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -50,8 +50,18 @@
           SwaggerUIBundle.plugins.DownloadUrl
         ],
         layout: "StandaloneLayout" 
-      },
-      url: "ArrivalNotice.yml",
+      })
+      // End Swagger UI call region
+
+      window.ui = ui
+    }
+  </script>
+
+  <script>
+    window.onload = function() {
+      // Begin Swagger UI call region
+      const ui = SwaggerUIBundle({
+        url: "docs-schema/ArrivalNotice.yml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -62,8 +72,7 @@
           SwaggerUIBundle.plugins.DownloadUrl
         ],
         layout: "StandaloneLayout" 
-      }
-      )
+      })
       // End Swagger UI call region
 
       window.ui = ui
