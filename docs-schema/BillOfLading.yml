@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  description: ''
+  description: 'BillOfLading Schema Document Swagger'
   title: BillOfLading
-  version: ''
+  version: '1.1.1'
 servers: []
 paths:
   /BillOfLading: {}
