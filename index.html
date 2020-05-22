@@ -53,7 +53,23 @@
         "onComplete": function(){
                 $("#model-BillOfLading").removeClass("model-container").addClass("swagger-ui opblock opblock-post");
         }  
-      })
+      },
+      url: "docs-schema/ArrivalNotice.yml",
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout",
+        "onComplete": function(){
+                $("#model-BillOfLading").removeClass("model-container").addClass("swagger-ui opblock opblock-post");
+        }  
+      }
+      )
       // End Swagger UI call region
 
       window.ui = ui
