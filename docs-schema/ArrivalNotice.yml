@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  description: ''
+  description: 'ArrivalNotice Schema Document Swagger'
   title: ArrivalNotice
-  version: ''
+  version: '0.0.3'
 servers: []
 paths:
   /ArrivalNotice: {}
