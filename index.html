@@ -39,7 +39,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "docs-schema/BillOfLading.yml",
+        url: "BillOfLading.yml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -49,12 +49,9 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout",
-        "onComplete": function(){
-                $("#model-BillOfLading").removeClass("model-container").addClass("swagger-ui opblock opblock-post");
-        }  
+        layout: "StandaloneLayout" 
       },
-      url: "docs-schema/ArrivalNotice.yml",
+      url: "ArrivalNotice.yml",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -64,10 +61,7 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout",
-        "onComplete": function(){
-                $("#model-BillOfLading").removeClass("model-container").addClass("swagger-ui opblock opblock-post");
-        }  
+        layout: "StandaloneLayout" 
       }
       )
       // End Swagger UI call region
