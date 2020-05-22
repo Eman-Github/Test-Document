@@ -49,7 +49,7 @@ echo "RESPONSE_REFRESH_TOKEN = $RESPONSE_REFRESH_TOKEN"
 
 if [ -z $RESPONSE_REFRESH_TOKEN ]; then
     echo "RESPONSE_REFRESH_TOKEN failed to be returned using POST API 'https://iam.ng.bluemix.net/oidc/token' ";
-    exit;
+    exit 1;
 fi;
 #---------------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ echo "BEARER_TOKEN = $BEARER_TOKEN"
 
 if [ -z $$RESPONSE_BEARER ]; then
     echo "RESPONSE_BEARER failed to be returned using API $URL ";
-    exit;
+    exit 1;
 fi; 
 
 #-----------------------------------------------------------------------------------
@@ -142,10 +142,10 @@ elif [ "$TRAVIS_BRANCH" == "test" || "$TRAVIS_BRANCH" == "sandbox" || "$TRAVIS_B
        JSON_FILE=`cat "${1}"`
        echo "$JSON_FILE"
 
-       #   POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
-       #      --header "${HEADER_CONTENT_TYPE}" \
-       #      --header "${HEADER_AUTHORIZATION}" \
-       #      --data-raw "${JSON_FILE}"`
+          POST_RESPONSE=`curl --location --request POST "$POST_API_URL" \
+             --header "${HEADER_CONTENT_TYPE}" \
+             --header "${HEADER_AUTHORIZATION}" \
+             --data-raw "${JSON_FILE}"`
 
       echo "POST_RESPONSE = $POST_RESPONSE";
       if echo "$POST_RESPONSE" | grep -q "id"; then

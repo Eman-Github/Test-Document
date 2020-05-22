@@ -117,13 +117,13 @@ declare -i TL_VERSION=0
 #------------------- Deploy to Development env. --------------
 if [ "$TRAVIS_BRANCH" == "develop" ]; then
    
-#   JSON_FILE=`cat "${1}"`
+   JSON_FILE=`cat "${1}"`
 #   echo "$JSON_FILE"
   
-#      UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
-#      --header "${HEADER_CONTENT_TYPE}" \
-#      --header "${HEADER_AUTHORIZATION}" \
-#      --data-raw "${JSON_FILE}"`
+      UPDATE_RESPONSE=`curl --location --request PUT "$API_URL" \
+      --header "${HEADER_CONTENT_TYPE}" \
+      --header "${HEADER_AUTHORIZATION}" \
+      --data-raw "${JSON_FILE}"`
       
     #  echo "UPDATE_RESPONSE = $UPDATE_RESPONSE";
       if echo "$UPDATE_RESPONSE" | grep -q "${data[3]}"; then
@@ -132,7 +132,7 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
          echo "API for uppdating the documentSchema $API_URL name = ${CHANGED_DOC_NAME} has failed to deploy ";
          echo "PUT API Response : ";
          echo "$UPDATE_RESPONSE";
-   #      exit 1;
+         exit 1;
       fi;
 
    for i in {1..10}
