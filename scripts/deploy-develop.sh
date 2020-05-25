@@ -157,9 +157,21 @@ if [ "$TRAVIS_BRANCH" == "develop" ]; then
 #------------------- Get Current TL Version on Test env. --------------
 elif [ "$TRAVIS_BRANCH" == "test" ]; then
 
-   DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
-   echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
-   if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
+   #DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
+   #echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
+   
+   ACTIONABLE_DOCUMENTS_NAMES=`cut -d "," -f 1 ./config.ini`;
+   ACTIONABLE_NAMES_ARRAY=($ACTIONABLE_DOCUMENTS_NAMES);
+   len=${#ACTIONABLE_NAMES_ARRAY[@]};
+   IS_ACTIONABLE_DOCUMENT="0";
+   for ((i = 0; i < $len; i++)); do
+     echo "Document name  = ${ACTIONABLE_NAMES_ARRAY[$i]} ";
+     if [[ ${ACTIONABLE_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME" ]] ; then
+         IS_ACTIONABLE_DOCUMENT="1";
+     fi;
+   done;
+
+   if [[ $IS_ACTIONABLE_DOCUMENT == 1 ]]; then
  
        JSON_FILE=`cat "${1}"`
     #   echo "$JSON_FILE"
@@ -201,9 +213,21 @@ elif [ "$TRAVIS_BRANCH" == "test" ]; then
 #------------------- Get Current TL Version on SandBox env. --------------
 elif [ "$TRAVIS_BRANCH" == "sandbox" ]; then
    
-   DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
-   echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
-   if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
+   #DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
+   #echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
+
+   ACTIONABLE_DOCUMENTS_NAMES=`cut -d "," -f 1 ./config.ini`;
+   ACTIONABLE_NAMES_ARRAY=($ACTIONABLE_DOCUMENTS_NAMES);
+   len=${#ACTIONABLE_NAMES_ARRAY[@]};
+   IS_ACTIONABLE_DOCUMENT="0";
+   for ((i = 0; i < $len; i++)); do
+     echo "Document name  = ${ACTIONABLE_NAMES_ARRAY[$i]} ";
+     if [[ ${ACTIONABLE_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME" ]] ; then
+         IS_ACTIONABLE_DOCUMENT="1";
+     fi;
+   done;
+
+   if [[ $IS_ACTIONABLE_DOCUMENT == 1 ]]; then
 
        JSON_FILE=`cat "${1}"`
     #   echo "$JSON_FILE"
@@ -245,9 +269,21 @@ elif [ "$TRAVIS_BRANCH" == "sandbox" ]; then
 #------------------- Get Current TL Version on Prod env. --------------
 elif [ "$TRAVIS_BRANCH" == "prod" ]; then
 
-   DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
-   echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
-   if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
+   #DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
+   #echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
+
+   ACTIONABLE_DOCUMENTS_NAMES=`cut -d "," -f 1 ./config.ini`;
+   ACTIONABLE_NAMES_ARRAY=($ACTIONABLE_DOCUMENTS_NAMES);
+   len=${#ACTIONABLE_NAMES_ARRAY[@]};
+   IS_ACTIONABLE_DOCUMENT="0";
+   for ((i = 0; i < $len; i++)); do
+     echo "Document name  = ${ACTIONABLE_NAMES_ARRAY[$i]} ";
+     if [[ ${ACTIONABLE_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME" ]] ; then
+         IS_ACTIONABLE_DOCUMENT="1";
+     fi;
+   done;
+
+   if [[ $IS_ACTIONABLE_DOCUMENT == 1 ]]; then
 
        JSON_FILE=`cat "${1}"`
     #   echo "$JSON_FILE"
@@ -291,9 +327,21 @@ elif [ "$TRAVIS_BRANCH" == "prod" ]; then
 #------------------- Get Current TL Version on Demo env. --------------
 elif [ "$TRAVIS_BRANCH" == "demo" ]; then
    
-   DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
-   echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
-   if [[ ! -z $DOC_ACTIONABLE_FLOWS ]]; then
+   #DOC_ACTIONABLE_FLOWS=`grep "${CHANGED_DOC_NAME}" ./config.ini`
+   #echo "DOC_ACTIONABLE_FLOWS = $DOC_ACTIONABLE_FLOWS"
+
+   ACTIONABLE_DOCUMENTS_NAMES=`cut -d "," -f 1 ./config.ini`;
+   ACTIONABLE_NAMES_ARRAY=($ACTIONABLE_DOCUMENTS_NAMES);
+   len=${#ACTIONABLE_NAMES_ARRAY[@]};
+   IS_ACTIONABLE_DOCUMENT="0";
+   for ((i = 0; i < $len; i++)); do
+     echo "Document name  = ${ACTIONABLE_NAMES_ARRAY[$i]} ";
+     if [[ ${ACTIONABLE_NAMES_ARRAY[$i]} == "$CHANGED_DOC_NAME" ]] ; then
+         IS_ACTIONABLE_DOCUMENT="1";
+     fi;
+   done;
+
+   if [[ $IS_ACTIONABLE_DOCUMENT == 1 ]]; then
 
        JSON_FILE=`cat "${1}"`
     #   echo "$JSON_FILE"
