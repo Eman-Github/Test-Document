@@ -102,6 +102,17 @@ do
    echo "$i ${data[i]}"
 done
 
+
+DOC_CONFIG=`grep "${CHANGED_DOC_NAME}" ./document_config.csv`;
+IFS=',' read -r -a config <<< "$DOC_CONFIG"
+
+for i in "${!config[@]}"
+do
+   echo "$i ${config[i]}"
+done
+
+sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${CHANGED_DOC_NAME}.json"
+
 #-----------------------------------------------------------------------------------
 #Call API to deploy the Document Schema on Development Env. 
 #============================================================

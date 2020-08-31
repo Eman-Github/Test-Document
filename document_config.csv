@@ -1,0 +1,7 @@
+documentName,name,docType,description
+ArrivalNotice,ARRIVAL_NOTICE,CONTAINER_ARRIVAL_NOTICE,Arrival Notice
+BillOfLading,BILL_OF_LADING,BILL_OF_LADING,Bill Of Lading
+HouseBillOfLading,HOUSE_BILL_OF_LADING,HOUSE_BILL_OF_LADING,House Bill Of Lading
+SeaWaybill,SEA_WAYBILL,SEA_WAYBILL,Sea Waybill
+ShippingInstructions,SHIPPING_INSTRUCTIONS,SHIPPING_INSTRUCTIONS,Shipping Instructions
+TestSchema,Test_document,TEST_DOCUMENT,This is test document
