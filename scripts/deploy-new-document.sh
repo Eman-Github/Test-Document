@@ -84,7 +84,7 @@ HEADER_AUTHORIZATION="Authorization: Bearer $BEARER_TOKEN"
 POST_API_URL="$HOST_URL/api/v1/documentSchema"
 echo "POST_API_URL = $POST_API_URL"
 
-DOC_CONFIG=`grep "${CHANGED_DOC_NAME}" ./document_config.csv`;
+DOC_CONFIG=`grep "${2}" ./document_config.csv`;
 IFS=',' read -r -a config <<< "$DOC_CONFIG"
 
 for i in "${!config[@]}"
@@ -101,7 +101,7 @@ cat "${1}"
           git commit -m "Auto update versions"
           git show-ref
           git branch
-          git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Document-Schema-Deployment.git HEAD:"$TRAVIS_BRANCH"
+          git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Test-Document.git HEAD:"$TRAVIS_BRANCH"
 
 #------------------- Deploy to Development env. --------------
 if [ "$TRAVIS_BRANCH" == "develop" ]; then
