@@ -10,6 +10,11 @@ nkknknnnnmmmbbbbmmmm0000lllllnnnnnnnnkkkjjjjlllklm,nmdnkkkkksjlkjsjsakjskjjjsdkj
 "docType": "${config[2]}",
 "description": "${config[3]}","supportedContentTypes": [
 "application/json"
+],
+"name": "${config[1]}",
+"docType": "${config[2]}",
+"description": "${config[3]}","supportedContentTypes": [
+"application/json"
 ],2
 3
 4
