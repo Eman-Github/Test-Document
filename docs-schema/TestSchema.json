@@ -1,32 +1,7 @@
-$$$$$$${replace}replace}replace}replace}replace}replace}replace}memnnn
+{memnnn
 nkknknnnnmmmbbbbmmmm0000lllllnnnnnnnnkkkjjjjlllklm,nmdnkkkkksjlkjsjsakjskjjjsdkjhskjshklxjlzjThis is a test schema 1
-
-"name": "${config[1]}",
-"docType": "${config[2]}",
-"description": "${config[3]}","supportedContentTypes": [
-"application/json"
-],
-"name": "${config[1]}",
-"docType": "${config[2]}",
-"description": "${config[3]}","supportedContentTypes": [
-"application/json"
-],
-"name": "${config[1]}",
-"docType": "${config[2]}",
-"description": "${config[3]}","supportedContentTypes": [
-"application/json"
-],
-"name": "${config[1]}",
-"docType": "${config[2]}",
-"description": "${config[3]}","supportedContentTypes": [
-"application/json"
-],
-"name": "${config[1]}",
-"docType": "${config[2]}",
-"description": "${config[3]}","supportedContentTypes": [
-"application/json"
-],2
-3
+2
+ccc3
 4
 mmmmm5
 6
