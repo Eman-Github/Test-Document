@@ -85,15 +85,17 @@ POST_API_URL="$HOST_URL/api/v1/documentSchema"
 echo "POST_API_URL = $POST_API_URL"
 
 DOC_CONFIG=`grep "${2}" ./document_config.csv`;
+echo "DOC_CONFIG = $DOC_CONFIG"
 IFS=',' read -r -a config <<< "$DOC_CONFIG"
+echo "config row = $config[@]"
 
 for i in "${!config[@]}"
 do
    echo "$i ${config[i]}"
 done
 
-sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
-
+#sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
+sed -i '0,/{/ s/{/{\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
 cat "${1}"
 
           git status
