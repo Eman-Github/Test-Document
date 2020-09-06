@@ -88,14 +88,25 @@ DOC_CONFIG=`grep "${2}" ./document_config.csv`;
 echo "DOC_CONFIG = $DOC_CONFIG"
 IFS=',' read -r -a config <<< "$DOC_CONFIG"
 echo "config row = $config[@]"
-
+replace = "{\n"name":"
 for i in "${!config[@]}"
 do
    echo "$i ${config[i]}"
+   if [ $i == 1 ]; then
+    echo "i = $i"
+    replace="${replace} ${config[i]} ,\n"docType": "
+   elif [ $i == 2 ]; then
+    echo "i = $i"                                                
+    replace="${replace} ${config[i]} ,\n"description":  "
+    elif [ $i == 3 ]; then
+    echo "i = $i"
+    replace="${replace} ${config[i]} ,"supportedContentTypes": [\n"application/json"\n],;   "
+   fi;
+  
 done
 
 #sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
-sed -i '0,/{/ s/{/{\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
+sed -i '0,/{/s/{/${replace}/' "${1}"
 cat "${1}"
 
           git status
