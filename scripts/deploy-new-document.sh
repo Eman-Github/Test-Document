@@ -95,26 +95,29 @@ do
    if [ $i == 1 ]; then
     echo "i = $i"
     replace="${replace} ${config[i]} ,\n"docType": "
+    echo "replace = $replace"
    elif [ $i == 2 ]; then
     echo "i = $i"                                                
     replace="${replace} ${config[i]} ,\n"description":  "
-    elif [ $i == 3 ]; then
+    echo "replace = $replace"
+   elif [ $i == 3 ]; then
     echo "i = $i"
     replace="${replace} ${config[i]} ,"supportedContentTypes": [\n"application/json"\n],;   "
-   fi;
+    echo "replace = $replace"   
+  fi;
   
 done
 
 #sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
-sed -i '0,/{/s/{/${replace}/' "${1}"
+sed -i '0,/{/s/{/"${replace}"/' "${1}"
 cat "${1}"
 
-          git status
-          git add ./${1}
-          git commit -m "Auto update versions"
-          git show-ref
-          git branch
-          git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Test-Document.git HEAD:"$TRAVIS_BRANCH"
+#git status
+#git add ./${1}
+#git commit -m "Auto update versions"
+#git show-ref
+#git branch
+#git push https://Eman-Github:$GITHUB_ACCESS_TOKEN@github.com/Eman-Github/Test-Document.git HEAD:"$TRAVIS_BRANCH"
 
 #------------------- Deploy to Development env. --------------
 if [ "$TRAVIS_BRANCH" == "develop" ]; then
