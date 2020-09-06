@@ -1,6 +1,11 @@
 {memnnn
 nkknknnnnmmmbbbbmmmm0000lllllnnnnnnnnkkkjjjjlllklm,nmdnkkkkksjlkjsjsakjskjjjsdkjhskjshklxjlzjThis is a test schema 1
-2
+
+"name": "${config[1]}",
+"docType": "${config[2]}",
+"description": "${config[3]}","supportedContentTypes": [
+"application/json"
+],2
 3
 4
 5
