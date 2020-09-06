@@ -112,7 +112,7 @@ done
 
 #sed -i "0,/{/s/{/$replace/" "${1}"
 #sed -i '0,/{/s/{/'"$replace"'/' "${1}"
-sed -i '0,/{/s//${replace}/' "${1}"
+sed -i '0,/{/s//"$replace"/' "${1}"
 cat "${1}"
 
 #git status
