@@ -92,12 +92,12 @@ do
    echo "$i ${config[i]}"
 done
 
-sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "docs-schema/${CHANGED_DOC_NAME}.json"
+sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
 
-cat ./docs-schema/"${CHANGED_DOC_NAME}.json"
+cat "${1}"
 
           git status
-          git add ./docs-schema/"${CHANGED_DOC_NAME}.json"
+          git add ./${1}
           git commit -m "Auto update versions"
           git show-ref
           git branch
