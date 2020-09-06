@@ -109,7 +109,9 @@ do
 done
 
 #sed -i '3s;^;\n"name": "${config[1]}",\n"docType": "${config[2]}",\n"description": "${config[3]}","supportedContentTypes": [\n"application/json"\n],;' "${1}"
-sed -i '0,/{/s/{/"${replace}"/' "${1}"
+
+sed -i 's/{/"${replace}"/1' "${1}"
+
 cat "${1}"
 
 #git status
