@@ -94,15 +94,15 @@ do
    echo "$i ${config[i]}"
    if [ $i == 1 ]; then
     echo "i = $i"
-    replace="${replace} /"${config[i]}/" ,\n"docType": "
+    replace="${replace} \"${config[i]}\" ,\n"docType": "
     echo "replace = $replace"
    elif [ $i == 2 ]; then
     echo "i = $i"                                                
-    replace="${replace} /"${config[i]}/" ,\n"description":  "
+    replace="${replace} \"${config[i]}\" ,\n"description":  "
     echo "replace = $replace"
    elif [ $i == 3 ]; then
     echo "i = $i"
-    replace="${replace} /"${config[i]}/" ,"supportedContentTypes": [\n"application/json"\n],;"
+    replace="${replace} \"${config[i]}\" ,"supportedContentTypes": [\n"application\/json"\n],;"
     echo "replace = $replace"   
   fi;
   
