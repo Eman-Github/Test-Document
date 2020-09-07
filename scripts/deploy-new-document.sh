@@ -88,13 +88,13 @@ DOC_CONFIG=`grep "${2}" ./document_config.csv`;
 echo "DOC_CONFIG = $DOC_CONFIG"
 IFS=',' read -r -a config <<< "$DOC_CONFIG"
 echo "config row = $config[@]"
-replace = "{\n"name":"
+replace="{\n"name":"
 for i in "${!config[@]}"
 do
    echo "$i ${config[i]}"
    if [ $i == 1 ]; then
     echo "i = $i"
-    replace="${replace} \"${config[i]}\" ,\n"docType": "
+    replace="{\n"name": \"${config[i]}\" ,\n"docType": "
     echo "replace = $replace"
    elif [ $i == 2 ]; then
     echo "i = $i"                                                
@@ -102,7 +102,7 @@ do
     echo "replace = $replace"
    elif [ $i == 3 ]; then
     echo "i = $i"
-    replace="${replace} \"${config[i]}\" ,"supportedContentTypes": [\n"application\/json"\n],;"
+    replace="${replace} \"${config[i]}\" ,\n"supportedContentTypes": [\n"application\/json"\n],;"
     echo "replace = $replace"   
   fi;
   
